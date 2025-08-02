@@ -1,0 +1,123 @@
+\documentclass{article}
+
+\usepackage[spanish]{babel}
+\usepackage[a4paper,top=2.54cm,bottom=2.54cm,left=2.54cm,right=2.54cm]{geometry}
+
+\usepackage{mathptmx}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\usepackage[style=apa, backend=biber]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+\addbibresource{sample.bib}
+
+\doublespacing
+
+\title{\textbf{BUENAS PRÁCTICAS EN EL DESARROLLO DE APLICACIONES REACTIVAS}}
+\author{%
+    \begin{tabular}{c}
+        \textit{E.A. Girón Leonardo} \\
+        \textit{7690-21-218 Universidad Mariano Gálvez} \\
+        \textit{Seminario de Tecnologías} \\
+        \href{mailto:egironl12@miumg.edu.gt}{\uline{egironl12@miumg.edu.gt}}
+    \end{tabular}%
+}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+El desarrollo de software moderno exige arquitecturas capaces de responder a una gran carga de usuarios, ofrecer tiempos de respuesta mínimos y adaptarse a entornos dinámicos. En este contexto surgen las aplicaciones reactivas, diseñadas para responder de forma eficiente a eventos, errores y cambios de estado. Este documento explora los fundamentos de las aplicaciones reactivas, sus principios, tecnologías comunes y, sobre todo, las buenas prácticas recomendadas para su desarrollo. Se incluyen referencias recientes y casos de uso que validan la importancia de adoptar este enfoque en entornos reales.
+\end{abstract}
+
+\textbf{Palabras clave:} aplicaciones reactivas, programación reactiva, buenas prácticas, arquitectura escalable, asincronía.
+
+\section{Introducción}
+
+El auge de las aplicaciones modernas, especialmente aquellas que se ejecutan en tiempo real o que atienden a miles de usuarios simultáneamente, ha hecho evidente la necesidad de adoptar nuevos paradigmas arquitectónicos. La programación reactiva ha cobrado fuerza como una solución eficiente para enfrentar retos de concurrencia, escalabilidad, y tolerancia a fallos.
+
+A diferencia del enfoque tradicional sincrónico, las aplicaciones reactivas se basan en la gestión eficiente de flujos de datos asincrónicos y eventos. Esta capacidad les permite ofrecer un rendimiento notable incluso bajo condiciones de alta demanda, haciendo uso óptimo de los recursos del sistema.
+
+\section{Marco Teórico}
+
+\subsection{Definición de aplicaciones reactivas}
+
+Una aplicación reactiva está diseñada para reaccionar ante eventos, datos y situaciones inesperadas, como errores o picos de carga, sin comprometer su funcionalidad ni su rendimiento. Este tipo de aplicaciones opera bajo una lógica de programación orientada a eventos, donde cada componente responde de forma autónoma y no bloqueante.
+
+Estas aplicaciones permiten construir soluciones que mantienen su estabilidad ante interrupciones o cambios del entorno, ya que su diseño facilita el aislamiento de fallos y la recuperación parcial del sistema sin afectar la experiencia del usuario. Según \textcite{toro2021}, las aplicaciones reactivas permiten construir sistemas no bloqueantes y escalables.Como se menciona en \parencite{villanueva2020}, el enfoque reactivo está orientado a eventos y mejora el rendimiento general del software.
+
+\subsection{El manifiesto reactivo}
+
+El Reactive Manifesto (2014) establece los principios fundamentales que deben regir una aplicación reactiva:
+
+\begin{itemize}
+    \item \textbf{Responsiva}: el sistema debe responder en tiempos predecibles.
+    \item \textbf{Resiliente}: debe mantenerse operativo ante fallos internos o externos.
+    \item \textbf{Elástica}: debe adaptarse dinámicamente a cambios en la carga.
+    \item \textbf{Orientada a mensajes}: la comunicación entre componentes debe ser asincrónica y desacoplada.
+\end{itemize}
+
+Estos principios permiten construir sistemas preparados para enfrentar incertidumbres y demandas variables, como ocurre en aplicaciones de comercio electrónico, servicios financieros o plataformas de streaming.
+
+\subsection{Tecnologías asociadas}
+
+El desarrollo de aplicaciones reactivas puede implementarse en diversos lenguajes y frameworks. Algunas de las tecnologías más populares incluyen:
+
+\begin{itemize}
+    \item \textbf{Spring WebFlux}: Framework en Java basado en el servidor no bloqueante Netty.
+    \item \textbf{ReactJS y Redux}: Usados en la construcción de interfaces de usuario reactivas, con control de estado centralizado.
+    \item \textbf{RxJS (Reactive Extensions)}: Biblioteca para JavaScript que permite el manejo de flujos de datos mediante observables.
+    \item \textbf{Flutter con Bloc o Riverpod}: Enfoques utilizados en aplicaciones móviles que permiten una gestión reactiva del estado.
+    \item \textbf{Akka y Vert.x}: Plataformas orientadas a la construcción de sistemas distribuidos, con procesamiento basado en actores y mensajes.
+\end{itemize}
+
+\section{Buenas prácticas en el desarrollo de aplicaciones reactivas}
+
+\subsection{Estructura modular y componentes desacoplados}
+
+Una buena práctica esencial consiste en diseñar la aplicación en módulos pequeños, independientes y reutilizables. El desacoplamiento entre componentes permite que estos se comuniquen mediante mensajes asincrónicos, lo que mejora la escalabilidad y la mantenibilidad del sistema.
+
+\subsection{Control centralizado del estado}
+
+El manejo del estado debe ser predecible y coherente. Bibliotecas como Redux o Context API en React, y Bloc o Riverpod en Flutter, permiten mantener una única fuente de verdad en la aplicación. Esto facilita depurar errores, aplicar pruebas unitarias y mejorar la sincronización entre vistas y lógica de negocio.
+
+\subsection{Evitar suscripciones no gestionadas}
+
+Las suscripciones a flujos deben ser controladas cuidadosamente. Dejar suscripciones activas de forma indefinida puede causar pérdidas de memoria y fugas de recursos. Por ello, se recomienda usar operadores como \texttt{takeUntil}, \texttt{first}, o cerrar manualmente los \texttt{subscriptions} cuando ya no se necesitan.
+
+\subsection{Manejo adecuado de asincronía}
+
+Los sistemas reactivos operan sobre eventos asincrónicos. Por ello, es fundamental evitar operaciones bloqueantes (como \texttt{sleep} o lecturas sincrónicas) y emplear flujos no bloqueantes. Operadores como \texttt{debounce}, \texttt{mergeMap} y \texttt{switchMap} permiten gestionar correctamente las respuestas del sistema ante múltiples eventos simultáneos.
+
+\subsection{Resiliencia y tolerancia a fallos}
+
+Para garantizar que la aplicación se mantenga operativa ante errores, se debe implementar un manejo de errores adecuado en todos los flujos. Se recomienda el uso de patrones como \textit{retry}, \textit{fallback}, y \textit{circuit breaker} para que el sistema se recupere sin intervención del usuario.
+
+\subsection{Monitoreo y análisis continuo}
+
+Una buena práctica es instrumentar la aplicación con herramientas de monitoreo que permitan observar métricas clave como tiempos de respuesta, errores, tasa de eventos y uso de recursos. Esto permite anticipar fallos, optimizar cuellos de botella y mejorar el rendimiento.
+
+\section{Aplicaciones prácticas y escenarios de uso}
+
+Las aplicaciones reactivas son ideales en escenarios donde la concurrencia y la alta disponibilidad son fundamentales. Algunos ejemplos incluyen:
+
+\begin{itemize}
+    \item \textbf{Sistemas de mensajería y chat en tiempo real}: donde múltiples usuarios se comunican simultáneamente.
+    \item \textbf{Plataformas de video en streaming}: que deben gestionar eventos de reproducción, buffering y cambio de resolución en tiempo real.
+    \item \textbf{APIs de servicios financieros}: como pasarelas de pago o sistemas bancarios que procesan millones de transacciones al día.
+    \item \textbf{Aplicaciones IoT}: que manejan grandes volúmenes de datos provenientes de sensores distribuidos geográficamente.
+\end{itemize}
+
+\section{Conclusiones}
+
+Las aplicaciones reactivas representan un avance significativo en la forma de diseñar y construir sistemas modernos, capaces de responder eficientemente a demandas complejas. Adoptar buenas prácticas como el desacoplamiento de componentes, la gestión adecuada del estado, el uso de patrones de resiliencia y el monitoreo continuo permite construir soluciones más robustas, escalables y sostenibles a largo plazo.
+
+El enfoque reactivo no es una moda, sino una evolución lógica del desarrollo de software frente a las necesidades actuales del mercado. A medida que la infraestructura digital crece, este paradigma se convierte en una herramienta esencial para garantizar experiencias de usuario fluidas, estables y seguras.
+
+\printbibliography
+
+\end{document}
